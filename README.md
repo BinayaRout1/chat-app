@@ -45,6 +45,7 @@ A real-time chat application that allows users to communicate instantly with fri
 ---
 ## Project Structure
 
+```
 chat-app/
 │
 ├─ backend/
@@ -72,7 +73,7 @@ chat-app/
 ├─ .env
 ├─ README.md
 └─ package.json
-
+```
 
 
 ## Installation
