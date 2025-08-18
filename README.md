@@ -28,7 +28,7 @@ A real-time chat application that allows users to communicate instantly with fri
 
 ## Demo
 
-[Live Demo](https://your-demo-link.com)
+[Live Demo](https://chatfast-chatapp.vercel.app)
 
 ---
 
