@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <div
-      className={`bg-[url('./src/assets/bgImage.jpg')] bg-cover bg-center bg-no-repeat transition-opacity duration-700 ${
+      className={`bg-[url('/bgImage.jpg')] bg-cover bg-center bg-no-repeat transition-opacity duration-700 ${
         fadeIn ? "opacity-100" : "opacity-0"
       }`}
     >
