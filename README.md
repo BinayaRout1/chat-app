@@ -48,30 +48,31 @@ A real-time chat application that allows users to communicate instantly with fri
 chat-app/
 │
 ├─ backend/
-│ ├─ controllers/
-│ ├─ models/
-│ ├─ routes/
-│ ├─ middleware/
-│ ├─ lib/
-│ ├─ server.js
-│ └─ .env
+│   ├─ controllers/
+│   ├─ models/
+│   ├─ routes/
+│   ├─ middleware/
+│   ├─ lib/
+│   ├─ server.js
+│   └─ .env
 │
 ├─ frontend/
-│ ├─ public/
-│ ├─ src/
-│ │ ├─ assets/
-│ │ ├─ pages/
-│ │ ├─ lib/
-│ │ ├─ context/
-│ │ ├─ App.css
-│ │ ├─ index.css
-│ │ ├─ main.jsx
-│ │ └─ App.jsx
-│ └─ package.json
+│   ├─ public/
+│   ├─ src/
+│   │   ├─ assets/
+│   │   ├─ pages/
+│   │   ├─ lib/
+│   │   ├─ context/
+│   │   ├─ App.css
+│   │   ├─ index.css
+│   │   ├─ main.jsx
+│   │   └─ App.jsx
+│   └─ package.json
 │
-├─.env
+├─ .env
 ├─ README.md
 └─ package.json
+
 
 
 ## Installation
