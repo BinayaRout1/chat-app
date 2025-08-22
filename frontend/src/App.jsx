@@ -7,13 +7,22 @@ import { Toaster } from "react-hot-toast";
 import { AuthContext } from "./context/AuthContext";
 
 const App = () => {
-  const { authUser } = useContext(AuthContext);
+  const { authUser, loading } = useContext(AuthContext); // ✅ added loading
   const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setFadeIn(true), 50); // tiny delay for transition
+    const timer = setTimeout(() => setFadeIn(true), 50);
     return () => clearTimeout(timer);
   }, []);
+
+  // ✅ Show loading screen while checking auth
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-black text-white text-xl">
+        Checking authentication...
+      </div>
+    );
+  }
 
   return (
     <div

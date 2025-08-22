@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import assets from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -16,8 +16,9 @@ const Sidebar = () => {
 
   const { logout, onlineUsers } = useContext(AuthContext);
 
-  // Search input
   const [input, setInput] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false); // ✅ menu toggle state
+  const menuRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -31,6 +32,19 @@ const Sidebar = () => {
     getUsers();
   }, [onlineUsers]);
 
+  // ✅ close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div
       className={`bg-[#818582]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${
@@ -41,24 +55,39 @@ const Sidebar = () => {
       <div className="pb-5">
         <div className="flex justify-between items-center">
           <img src={assets.logo} alt="logo" className="max-w-40" />
-          <div className="relative py-2 group">
+
+          {/* ✅ Menu with click toggle */}
+          <div className="relative py-2" ref={menuRef}>
             <img
               src={assets.menu_icon}
               alt="menu"
               className="max-w-5 cursor-pointer"
+              onClick={() => setMenuOpen((prev) => !prev)}
             />
-            <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-[#282142] border border-gray-600 text-gray-100 hidden group-hover:block">
-              <p
-                onClick={() => navigate("/profile")}
-                className="cursor-pointer text-sm"
-              >
-                Edit Profile
-              </p>
-              <hr className="my-2 border border-gray-500" />
-              <p onClick={() => logout()} className="cursor-pointer text-sm">
-                Logout
-              </p>
-            </div>
+
+            {menuOpen && (
+              <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-[#282142] border border-gray-600 text-gray-100">
+                <p
+                  onClick={() => {
+                    navigate("/profile");
+                    setMenuOpen(false);
+                  }}
+                  className="cursor-pointer text-sm"
+                >
+                  Edit Profile
+                </p>
+                <hr className="my-2 border border-gray-500" />
+                <p
+                  onClick={() => {
+                    logout();
+                    setMenuOpen(false);
+                  }}
+                  className="cursor-pointer text-sm"
+                >
+                  Logout
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -81,7 +110,6 @@ const Sidebar = () => {
           <div
             onClick={() => {
               setSelectedUser(user);
-              // Set unseen count to 0 safely
               setUnseenMessages((prev) => ({
                 ...prev,
                 [user._id]: 0,
@@ -106,7 +134,6 @@ const Sidebar = () => {
               )}
             </div>
 
-            {/* Only show badge if count > 0 */}
             {unseenMessages[user._id] > 0 && (
               <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50">
                 {unseenMessages[user._id]}

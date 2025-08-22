@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [loading, setLoading] = useState(true); // ✅ NEW
 
   // Connect Socket
   const connectSocket = (userData) => {
@@ -45,6 +46,8 @@ export const AuthProvider = ({ children }) => {
       setToken(null);
       localStorage.removeItem("token");
       toast.error(error.message);
+    } finally {
+      setLoading(false); // ✅ done checking
     }
   };
 
@@ -95,7 +98,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common["token"] = token;
-      checkAuth(); // run in background, page will render immediately
+      checkAuth();
+    } else {
+      setLoading(false); // ✅ no token, no need to wait
     }
   }, []);
 
@@ -107,6 +112,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     updateProfile,
+    loading, // ✅ expose loading
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
